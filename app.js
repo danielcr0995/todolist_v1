@@ -2,7 +2,8 @@ const express=require('express');
 const bodyParser=require('body-parser');
 
 const app= express();
-items=[];
+let items=[];
+let workItems=[];
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true})); // read data that is entered in a form
@@ -22,39 +23,9 @@ app.get('/', function(req,res){
 
     let day=today.toLocaleDateString('en-US', options);
 
-    // switch (currentDay){
-    //     case 0:
-    //         day='Sunday';
-    //         break;
-    //     case 1:
-    //         day='Monday';
-    //         break;
-    //     case 2:
-    //         day='Tuesday';
-    //         break;
-    //     case 3:
-    //         day='Wednesday';
-    //         break;
-    //     case 4:
-    //         day='Thursday';
-    //         break;
-    //     case 5:
-    //         day='Friday';
-    //         break;
-    //     case 6:
-    //         day='Saturday';
-    //         break;
-    //     default:
-    //         console.log('Error curent day is '+ curretDay);
-    // }
-    // if (currentDay===6 || currentDay===0){
-    //     day='Weekend'
-    // }else{
-    //     day='Weekday'
-    // }
     res.render('list', {
-        kindOfDay:day,
-        nItem:items,
+        listTitle:day,
+        nItems:items,
         
     });//KindOfDay goes in ejs file, day is the variale in this file
 
@@ -62,11 +33,31 @@ app.get('/', function(req,res){
 })
 
 app.post('/', function(req,res){
-    const item= req.body.newItem;//body parser has to required
-    items.push(item);
-    res.redirect("/");
+    // console.log(req.body);
+    let item= req.body.newItem;//body parser has to required
+    if(req.body.list==='Work'){
+        workItems.push(item);
+        res.redirect('/work')
+    }else{
+        items.push(item);
+        res.redirect("/");
+    }
+    
 
 })
+
+// WORK LIST
+app.get('/work', function(req,res){
+    
+    res.render('list', {listTitle:'Work List', nItems: workItems}); //list is the name of the ejs file
+});
+
+// app.post('/work', function(req,res){
+//     console.log(req.body);
+//     let item=req.body.newItem;
+//     workItems.push(item);
+//     res.redirect('/work')
+// })
 
 app.listen(3000, function(){
     console.log('Server stated on port 3000');

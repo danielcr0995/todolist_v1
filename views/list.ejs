@@ -10,20 +10,20 @@
 <body>
     
      <div class='box' id='heading'>
-        <h1><%= kindOfDay%> </h1>
+        <h1><%= listTitle %> </h1>
      </div>
-     
+
      <div class="box">
-        <% for (let i=0; i< nItem.length;i++){ %>
+        <% for (let i=0; i< nItems.length;i++){ %>
             <div class="item">
                 <input type="checkbox">
-                <p><%= nItem[i] %></p>
+                <p><%= nItems[i] %></p>
             </div>
          <% } %>
 
          <form action="/" method= "post" class='item'>
             <input type="text" name='newItem' placeholder="New Item" autocomplete="off">
-            <button type='submit' name='button'>+</button>
+            <button type='submit' name='list' value=<%= listTitle%>>+</button>
         </form> 
      </div>
      
