@@ -1,34 +1,28 @@
 
-module.exports.date=date;
-
-function date(){
-    let today=new Date();
-    let currentDay= today.getDay();
-    // var day='';
-
-    let options={
+exports.date=function () {
+    const today=new Date();
+    // let currentDay= today.getDay();   
+    // console.log(currentDay);
+    const options={
         weekday:'long',
         day:'numeric',
         month: 'long'
     };
 
-    let day=today.toLocaleDateString('en-US', options);
-    return day;
-}
+    return today.toLocaleDateString('en-US', options);
+    }
 
-module.exports.day=day;
-
-function day(){
-    let today=new Date();
-    let currentDay= today.getDay();
-    // var day='';
-
-    let options={
-        weekday:'long',        
+exports.day= function() {
+    const today=new Date();
+    // let currentDay= today.getDay();
+   // var day='';    
+   const options={
+        weekday:'long',
+        day:'numeric',
+        month: 'long'
     };
-
-    let day=today.toLocaleDateString('en-US', options);
-    return day;
+    return today.toLocaleDateString('en-US',options);
+    
 }
 
-console.log(module.exports);
+// console.log(module.exports);
