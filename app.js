@@ -32,6 +32,8 @@ app.get('/', function(req,res){
         case 6:
             day='Saturday';
             break;
+        default:
+            console.log('Error curent day is '+ curretDay);
     }
     // if (currentDay===6 || currentDay===0){
     //     day='Weekend'
