@@ -1,5 +1,6 @@
 const express=require('express');
 const bodyParser=require('body-parser');
+const res = require('express/lib/response');
 
 const app= express();
 let items=[];
@@ -51,6 +52,10 @@ app.get('/work', function(req,res){
     
     res.render('list', {listTitle:'Work List', nItems: workItems}); //list is the name of the ejs file
 });
+
+app.get('/about' ,function(req,res){
+    res.render('about');
+})
 
 // app.post('/work', function(req,res){
 //     console.log(req.body);

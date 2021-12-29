@@ -100,3 +100,35 @@ body {
   margin: auto auto;
   background-color: #d3daf8;
 }
+
+/* FOOTER */
+
+footer {
+  padding: 7% 15%;
+}
+
+.icon {
+  margin: 1.5%;
+}
+
+.author {
+  color: black;
+  margin: 7% 0 0;
+}
+
+.author-link {
+  color: #000;
+  text-decoration: none;
+  margin: 0 1%;
+}
+
+.author-links {
+  display: flex;
+  justify-content: center;
+  margin: 2% 0 0;
+}
+
+.author-link:hover {
+  text-decoration: underline;
+  color: #000;
+}
