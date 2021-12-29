@@ -8,17 +8,17 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true})); // read data that is entered in a form
 
 app.get('/', function(req,res){
-    var today=new Date();
-    var currentDay= today.getDay();
+    let today=new Date();
+    let currentDay= today.getDay();
     // var day='';
 
-    var options={
+    let options={
         weekday:'long',
         day:'numeric',
         month: 'long'
     };
 
-    var day=today.toLocaleDateString('en-US', options);
+    let day=today.toLocaleDateString('en-US', options);
 
     // switch (currentDay){
     //     case 0:
