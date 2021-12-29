@@ -2,6 +2,7 @@ const express=require('express');
 const bodyParser=require('body-parser');
 
 const app= express();
+var items=[];
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true})); // read data that is entered in a form
@@ -49,14 +50,19 @@ app.get('/', function(req,res){
     // }else{
     //     day='Weekday'
     // }
-    res.render('list', {kindOfDay:day});//KindOfDay goes in ejs file, day is the variale in this file
+    res.render('list', {
+        kindOfDay:day,
+        nItem:items,
+        
+    });//KindOfDay goes in ejs file, day is the variale in this file
 
 
 })
 
 app.post('/', function(req,res){
-    const nItem= req.body.newItem;//body parser has to required
-    console.log(nItem);
+    const item= req.body.newItem;//body parser has to required
+    items.push(item);
+    res.redirect("/");
 
 })
 
