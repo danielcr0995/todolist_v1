@@ -76,14 +76,20 @@ app.get('/', function(req,res){
 
 app.post('/', function(req,res){
     // console.log(req.body);
-    let item= req.body.newItem;//body parser has to required
-    if(req.body.list==='Work'){
-        workItems.push(item);
-        res.redirect('/work')
-    }else{
-        items.push(item);
-        res.redirect("/");
-    }
+    let itemName= req.body.newItem;//body parser has to required
+
+    const newItem = new Item({
+        name:itemName
+    });
+    newItem.save();
+    res.redirect("/");
+    // if(req.body.list==='Work'){
+    //     workItems.push(item);
+    //     res.redirect('/work')
+    // // }else{
+    // //     items.push(item);
+    // //     res.redirect("/");
+    // // }
     
 
 })
