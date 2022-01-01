@@ -10,7 +10,7 @@ let workItems=[];
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true})); // read data that is entered in a form
 
-app.use(express.static('public'));
+app.use(express.static('public')); // name of folder where the styles and the images of the webpage are
 
 app.get('/', function(req,res){
    
