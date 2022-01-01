@@ -69,7 +69,7 @@ app.get('/', function(req,res){
             if (error) console.log(error);
             else{
                 res.render('list', {
-                    listTitle:day,
+                    listTitle:"Today",
                     nItems:items,
                     
                 });
@@ -84,25 +84,25 @@ app.get('/', function(req,res){
 
 app.get('/:listTitlePage', function(req,res){
     const lsTitle=req.params.listTitlePage;
-    console.log(lsTitle!=='');
+    // console.log(lsTitle!=='');
     // res.render('list',{listTitle: lsTitle, nItems:items} )
     List.findOne({name:lsTitle},function (err,foundList) {
         // console.log(items.items);
        if (!err){
            if(foundList){
             //    console.log('exists');
-                res.render('list', {
+               res.render('list', {
                 listTitle:lsTitle,
                 nItems:foundList.items,
                })
            }else{
-            console.log("doesn's exists");
+            // console.log("doesn's exists");
             const list = new List({
                     name:lsTitle,
                     items: defaultItems
                 });
             list.save();
-            res.redirect('/:listTitlePage');
+            res.redirect('/'+lsTitle);
            }
            
        } 
@@ -118,12 +118,27 @@ app.get('/:listTitlePage', function(req,res){
 app.post('/', function(req,res){
     // console.log(req.body);
     let itemName= req.body.newItem;//body parser has to required
-
+    let listName= req.body.list;
     const newItem = new Item({
         name:itemName
     });
-    newItem.save();
-    res.redirect("/");
+    if (listName==='Today') {
+        newItem.save();
+        res.redirect("/");
+        
+    }else{
+
+        List.findOne({name:listName}, function(err, foundList){
+            if (!err) {
+                foundList.items.push(newItem);
+                foundList.save();
+                res.redirect('/'+listName)
+                
+            }
+        });
+    }
+    
+    
     // if(req.body.list==='Work'){
     //     workItems.push(item);
     //     res.redirect('/work')
