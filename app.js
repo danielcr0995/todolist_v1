@@ -1,7 +1,22 @@
 const express=require('express');
 const bodyParser=require('body-parser');
-const res = require('express/lib/response');
+const mongoose = require('mongoose');
+// const res = require('express/lib/response');
 const date=require(__dirname +'/date.js');
+
+mongoose.connect('mongodb://localhost:27017/todolistDB');
+
+const itemSchema = new mongoose.Schema({
+    name: String
+});
+
+const Item= mongoose.model('todoList', itemSchema);
+
+const item= new Item({
+    name:'usa business'
+});
+
+// item.save();
 
 const app= express();
 let items=[];
