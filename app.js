@@ -24,7 +24,12 @@ const item3= new Item({
     name:'<-- Hit this to delete them'
 });
 
+const listSchema= new mongoose.Schema({
+    name:String,
+    items:[itemSchema]
+});
 
+const List = mongoose.model('List', listSchema);
 
 // item.save();
 // Item.find(function(error,items){
@@ -46,12 +51,15 @@ app.use(bodyParser.urlencoded({extended:true})); // read data that is entered in
 
 app.use(express.static('public')); // name of folder where the styles and the images of the webpage are
 
+const defaultItems=[item1,item2,item3]
+
 app.get('/', function(req,res){
-   
     let day =date.date();
     Item.find({},function(error,items){
+        // console.log(items);
+
         if (items.length ===0) {
-            Item.insertMany([item1,item2,item3],function(error){
+            Item.insertMany(defaultItems,function(error){
                 if (error){console.log(error);
                 }else console.log('Items added succesfully to DB');
             });
@@ -68,11 +76,44 @@ app.get('/', function(req,res){
             }
         
         }
-    })
+    });
     //KindOfDay goes in ejs file, day is the variale in this file
 
 
-})
+});
+
+app.get('/:listTitlePage', function(req,res){
+    const lsTitle=req.params.listTitlePage;
+    console.log(lsTitle!=='');
+    // res.render('list',{listTitle: lsTitle, nItems:items} )
+    List.findOne({name:lsTitle},function (err,foundList) {
+        // console.log(items.items);
+       if (!err){
+           if(foundList){
+            //    console.log('exists');
+                res.render('list', {
+                listTitle:lsTitle,
+                nItems:foundList.items,
+               })
+           }else{
+            console.log("doesn's exists");
+            const list = new List({
+                    name:lsTitle,
+                    items: defaultItems
+                });
+            list.save();
+            res.redirect('/:listTitlePage');
+           }
+           
+       } 
+    })
+
+    // console.logF('holq');
+    // 
+        
+    });
+    
+
 
 app.post('/', function(req,res){
     // console.log(req.body);
@@ -92,7 +133,18 @@ app.post('/', function(req,res){
     // // }
     
 
-})
+});
+
+app.post('/delete',function(req,res){
+    const checkItem = req.body.checkbox;
+    Item.deleteOne({_id:checkItem},function (err){
+            if(err) console.log('could not delete item');
+            else console.log('Succesfully deleted item');
+        });
+    res.redirect('/');
+});
+
+
 
 // WORK LIST
 app.get('/work', function(req,res){
