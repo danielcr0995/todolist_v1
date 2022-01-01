@@ -17,10 +17,19 @@ const item= new Item({
 });
 
 // item.save();
+// Item.find(function(error,items){
+//     if (error) console.log(error);
+//     else{
+//         mongoose.connection.close();
+//         items.forEach(function(item){
+//             console.log(item.name);
+//         })
+//     }
+// })
 
 const app= express();
-let items=[];
-let workItems=[];
+// let items=[];
+// let workItems=[];
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true})); // read data that is entered in a form
@@ -30,11 +39,17 @@ app.use(express.static('public')); // name of folder where the styles and the im
 app.get('/', function(req,res){
    
     let day =date.date();
-    res.render('list', {
-        listTitle:day,
-        nItems:items,
-        
-    });//KindOfDay goes in ejs file, day is the variale in this file
+    Item.find({},function(error,items){
+        if (error) console.log(error);
+        else{
+            res.render('list', {
+                listTitle:day,
+                nItems:items,
+                
+            });
+        }
+    })
+    //KindOfDay goes in ejs file, day is the variale in this file
 
 
 })
