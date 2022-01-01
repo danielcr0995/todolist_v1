@@ -153,7 +153,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: rgb(22, 22, 22);
 }
 
 .footer-items {
@@ -163,18 +163,18 @@ body {
   align-items: center;
   justify-content: center;
   padding: 15px 0 9px;
-  background-color: rgb(29, 29, 29);
+  background-color: #d3daf8;
 }
 
 .author-link {
   margin-left: 20px;
   display: flex;
   align-items: center;
-  color: #fff;
+  color: rgb(22, 22, 22);
   text-decoration: none;
 }
 .author-link:hover {
-  color: #fff;
+  color: rgb(22, 22, 22);
   text-decoration: underline;
 }
 
