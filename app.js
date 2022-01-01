@@ -152,11 +152,22 @@ app.post('/', function(req,res){
 
 app.post('/delete',function(req,res){
     const checkItem = req.body.checkbox;
-    Item.deleteOne({_id:checkItem},function (err){
+    const listName = req.body.listName;
+    if (listName==='Today'){
+        Item.deleteOne({_id:checkItem},function (err){
             if(err) console.log('could not delete item');
             else console.log('Succesfully deleted item');
         });
-    res.redirect('/');
+        res.redirect('/');
+    }else{
+        List.findOneAndUpdate({name:listName},{$pull:{items:{_id:checkItem}}}, function (err, foundList) {
+            if (!err) {
+                // console.log('Removed item from custom list');
+                res.redirect('/'+listName);
+            }
+        }
+    )};
+    
 });
 
 
