@@ -3,6 +3,7 @@ const bodyParser=require('body-parser');
 const mongoose = require('mongoose');
 // const res = require('express/lib/response');
 const date=require(__dirname +'/date.js');
+const _=require('lodash');
 
 mongoose.connect('mongodb://localhost:27017/todolistDB');
 
@@ -83,7 +84,7 @@ app.get('/', function(req,res){
 });
 
 app.get('/:listTitlePage', function(req,res){
-    const lsTitle=req.params.listTitlePage;
+    const lsTitle=_.capitalize(req.params.listTitlePage);
     // console.log(lsTitle!=='');
     // res.render('list',{listTitle: lsTitle, nItems:items} )
     List.findOne({name:lsTitle},function (err,foundList) {
