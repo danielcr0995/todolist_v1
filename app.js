@@ -12,9 +12,19 @@ const itemSchema = new mongoose.Schema({
 
 const Item= mongoose.model('todoList', itemSchema);
 
-const item= new Item({
-    name:'usa business'
+const item1= new Item({
+    name:'Welcome to your todo List'
 });
+
+const item2= new Item({
+    name:'Click the "+" to add new items'
+});
+
+const item3= new Item({
+    name:'<-- Hit this to delete them'
+});
+
+
 
 // item.save();
 // Item.find(function(error,items){
@@ -40,13 +50,23 @@ app.get('/', function(req,res){
    
     let day =date.date();
     Item.find({},function(error,items){
-        if (error) console.log(error);
-        else{
-            res.render('list', {
-                listTitle:day,
-                nItems:items,
-                
+        if (items.length ===0) {
+            Item.insertMany([item1,item2,item3],function(error){
+                if (error){console.log(error);
+                }else console.log('Items added succesfully to DB');
             });
+            res.redirect('/')
+            
+        }else{
+            if (error) console.log(error);
+            else{
+                res.render('list', {
+                    listTitle:day,
+                    nItems:items,
+                    
+                });
+            }
+        
         }
     })
     //KindOfDay goes in ejs file, day is the variale in this file
